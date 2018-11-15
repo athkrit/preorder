@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="175dp"
     android:orientation="vertical"
     android:weightSum="7">
 
@@ -19,16 +19,8 @@
             android:id="@+id/text1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_weight="2"
             android:text="date" />
-
-        <TextView
-            android:id="@+id/goall"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="0dp"
-            android:layout_weight="1"
-            android:text="allProduct" />
     </LinearLayout>
 
     <LinearLayout
@@ -44,8 +36,7 @@
             android:id="@+id/img1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/mangosteen" />
+            android:layout_weight="1" />
 
         <ImageView
             android:id="@+id/img2"
@@ -89,9 +80,5 @@
             android:layout_weight="1" />
 
     </LinearLayout>
-    <TextView
-        android:id="@+id/test"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
 </LinearLayout>
