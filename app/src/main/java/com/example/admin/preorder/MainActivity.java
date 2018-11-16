@@ -1,9 +1,12 @@
 package com.example.admin.preorder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -27,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> productName = new ArrayList<String>();
     ArrayList<Integer> quantity = new ArrayList<Integer>();
     ArrayList<String> unitPro = new ArrayList<String>();
-    CustomAdapterForPreorder adapter;
+    CustomAdapterForPreorder adapterCus;
     ArrayList<String> clubkey = new ArrayList<String>();
     String getK;
     int countKey, countDurian, countLongan, countOrange, countPineapple, countrambutan, countmangosteen;
@@ -37,15 +40,15 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Integer> countPineappleA = new ArrayList<Integer>();
     ArrayList<Integer> countrambutanA = new ArrayList<Integer>();
     ArrayList<Integer> countmangosteenA = new ArrayList<Integer>();
-    ArrayList<String> fruitcount = new ArrayList<String>();
+    ArrayList<String[]> fruitcount = new ArrayList<String[]>();
+    public int i;
+    String[] day;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.listday);
-
-
+        setContentView(R.layout.activity_main);
         final int[] fruit = {R.drawable.mangosteen, R.drawable.longan, R.drawable.orange, R.drawable.pineapple, R.drawable.rambutan, R.drawable.durian};
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         callPre = database.getReference().child("product").child("preorderProduct");
@@ -54,79 +57,30 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 countKey = 0;
                 clubkey.clear();
-                countDurianA.clear();
-                countLonganA.clear();
-                countOrangeA.clear();
-                countPineappleA.clear();
-                countrambutanA.clear();
-                countmangosteenA.clear();
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     getK = d.getKey();
                     clubkey.add(getK);
                     countKey = countKey + 1;
                 }
-//                for (int i = 0; i < countKey; i++) {
-//                    countDurian = 0;
-//                    countrambutan =0;
-//                    countPineapple =0;
-//                    countOrange = 0;
-//                    countmangosteen =0;
-//                    countLongan=0;
-                    callall = database.getReference().child("product").child("preorderProduct").child(clubkey.get(1));
-                    callall.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for (DataSnapshot d : dataSnapshot.getChildren()) {
-                                GetData get = d.getValue(GetData.class);
-                                fruitcount.add(get.getFruitName());
-                            }
-                            for (int x = 0; x < fruitcount.size(); x++) {
-                                if (fruitcount.get(x).equals("ทุเรียน")) {
-                                    countDurian++;
-                                }
-                                else if (fruitcount.get(x).equals("มังคุด")) {
-                                    countmangosteen++;
-                                }
-                                else if (fruitcount.get(x).equals("ลำไย")) {
-                                    countLongan++;
-                                }
-                                else if (fruitcount.get(x).equals("เงาะ")) {
-                                    countrambutan++;
-                                }
-                                else if (fruitcount.get(x).equals("แตงโม")) {
-                                    countPineapple++;
-                                }
-                                else {
-                                    countOrange++;
-                                }
-                            }
-                            countDurianA.add(countDurian);
-                            countLonganA.add(countLongan);
-                            countOrangeA.add(countOrange);
-                            countPineappleA.add(countPineapple);
-                            countrambutanA.add(countrambutan);
-                            countmangosteenA.add(countmangosteen);
-
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                    int coun = fruitcount.size();
-                    TextView textView =findViewById(R.id.text1);
-                textView.setText(""+countDurianA.size());
-
-                }
-//                ListView list = (ListView) findViewById(R.id.list);
-//                adapter = new CustomAdapterForPreorder(getApplicationContext(),fruitcount);
-//                adapter = new CustomAdapterForPreorder(getApplicationContext(), clubkey, countDurianA, countLonganA, countOrangeA, countPineappleA, countrambutanA, countmangosteenA);
-//                list.setAdapter(adapter);
-//            }
-
+                String[] mStringArray = new String[clubkey.size()];
+                mStringArray = clubkey.toArray(mStringArray);
+                ListView list = (ListView) findViewById(R.id.list);
+                ArrayAdapter<String> adapter =new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, android.R.id.text1, mStringArray);
+                list.setAdapter(adapter);
+                final String[] finalMStringArray = mStringArray;
+                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent next = new Intent(MainActivity.this, PreListDay.class);
+                        next.putExtra("DayPre", finalMStringArray[position]);
+                        startActivity(next);
+                    }
+                });
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+
     }
 }

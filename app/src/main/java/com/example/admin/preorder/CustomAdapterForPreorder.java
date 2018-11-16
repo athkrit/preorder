@@ -53,33 +53,33 @@ public class CustomAdapterForPreorder extends BaseAdapter {
         final TextView date = (TextView)view.findViewById(R.id.text1);
         date.setText(""+clubkey.get(position));
 
-        ArrayList<String> name = new ArrayList<String>();
+//        ArrayList<String> name = new ArrayList<String>();
 
-        if(countDurianA.get(position)!=0){
-            ImageView img1 = view.findViewById(R.id.img1);
-            img1.setImageResource(R.drawable.durian);
-        }
-        if(countLonganA.get(position)!=0){
-            ImageView img2 = view.findViewById(R.id.img2);
-            img2.setImageResource(R.drawable.longan);
-        }
-        if(countrambutanA.get(position)!=0){
-            ImageView img3 = view.findViewById(R.id.img3);
-            img3.setImageResource(R.drawable.rambutan);
-        }
-        if(countOrangeA.get(position)!=0){
-            ImageView img4 = view.findViewById(R.id.img11);
-            img4.setImageResource(R.drawable.orange);
-        }
-        if(countmangosteenA.get(position)!=0){
-            ImageView img5 = view.findViewById(R.id.img12);
-            img5.setImageResource(R.drawable.mangosteen);
-        }
-        if(countPineappleA.get(position)!=0){
-            ImageView img6 = view.findViewById(R.id.img13);
-            img6.setImageResource(R.drawable.pineapple);
-        }
+//        if(countDurianA.get(position)!=0){
+//            ImageView img1 = view.findViewById(R.id.img1);
+//            img1.setImageResource(R.drawable.durian);
+//        }
+//        if(countLonganA.get(position)!=0){
+//            ImageView img2 = view.findViewById(R.id.img2);
+//            img2.setImageResource(R.drawable.longan);
+//        }
+//        if(countrambutanA.get(position)!=0){
+//            ImageView img3 = view.findViewById(R.id.img3);
+//            img3.setImageResource(R.drawable.rambutan);
+//        }
+//        if(countOrangeA.get(position)!=0){
+//            ImageView img4 = view.findViewById(R.id.img11);
+//            img4.setImageResource(R.drawable.orange);
+//        }
+//        if(countmangosteenA.get(position)!=0){
+//            ImageView img5 = view.findViewById(R.id.img12);
+//            img5.setImageResource(R.drawable.mangosteen);
+//        }
+//        if(countPineappleA.get(position)!=0){
+//            ImageView img6 = view.findViewById(R.id.img13);
+//            img6.setImageResource(R.drawable.pineapple);
+//        }
 
-    return view;
+    return convertView;
     }
 }
