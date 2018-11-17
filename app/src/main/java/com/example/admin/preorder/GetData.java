@@ -16,7 +16,7 @@ public class GetData {
     public String getDate() {
         return date;
     }
-    public String getFruitID() {
+    public String getFarmID() {
         return farmID;
     }
     public String getFruitName() {

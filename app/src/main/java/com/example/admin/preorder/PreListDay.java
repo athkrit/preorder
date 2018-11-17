@@ -1,8 +1,13 @@
 package com.example.admin.preorder;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -39,19 +44,31 @@ public class PreListDay extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     getData = d.getValue(GetData.class);
-                    fruitID.add(getData.getFruitID());
                     fruitName.add(getData.getFruitName());
-                    price.add(getData.getPrice());
-                    productName.add(getData.getProductName());
-                    quantity.add(getData.getQuantity());
-                    unitPro.add(getData.getUnitPro());
                 }
+                String[] mStringArray= new String[fruitName.size()];
+                mStringArray = fruitName.toArray(mStringArray);
+                final String[] finalMStringArray = mStringArray;
+                ListView list = (ListView) findViewById(R.id.list2);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(PreListDay.this,android.R.layout.simple_list_item_1, android.R.id.text1,finalMStringArray);
+                list.setAdapter(adapter);
+                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent next = new Intent(PreListDay.this, show.class);
+                        next.putExtra("DayPre", order);
+                        next.putExtra("DayPreFruit", fruitName.get(position));
+                        startActivity(next);
+                    }
+                });
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
-
+//        ListView list = findViewById(R.id.list2);
+//        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, android.R.id.text1,mStringArray);
+//        list.setAdapter(adapter);
     }
 }

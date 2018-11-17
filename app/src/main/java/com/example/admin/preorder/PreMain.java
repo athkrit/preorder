@@ -1,28 +1,22 @@
 package com.example.admin.preorder;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class PreMain extends AppCompatActivity {
     public DatabaseReference callPre, callall;
     ArrayList<String> fruitID = new ArrayList<String>();
     ArrayList<String> fruitName = new ArrayList<String>();
@@ -48,8 +42,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        final int[] fruit = {R.drawable.mangosteen, R.drawable.longan, R.drawable.orange, R.drawable.pineapple, R.drawable.rambutan, R.drawable.durian};
+        setContentView(R.layout.premain);
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         callPre = database.getReference().child("product").child("preorderProduct");
         callPre.addValueEventListener(new ValueEventListener() {
@@ -64,14 +57,15 @@ public class MainActivity extends AppCompatActivity {
                 }
                 String[] mStringArray = new String[clubkey.size()];
                 mStringArray = clubkey.toArray(mStringArray);
-                ListView list = (ListView) findViewById(R.id.list);
-                ArrayAdapter<String> adapter =new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, android.R.id.text1, mStringArray);
-                list.setAdapter(adapter);
                 final String[] finalMStringArray = mStringArray;
+                ListView list = (ListView) findViewById(R.id.list);
+                adapterCus =new CustomAdapterForPreorder(getApplicationContext(),clubkey);
+                list.setAdapter(adapterCus);
+
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent next = new Intent(MainActivity.this, PreListDay.class);
+                        Intent next = new Intent(PreMain.this, PreListDay.class);
                         next.putExtra("DayPre", finalMStringArray[position]);
                         startActivity(next);
                     }
